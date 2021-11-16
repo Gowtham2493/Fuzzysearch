@@ -61,7 +61,7 @@ public class UploadServiceImp implements UploadService{
                 for(int k=0;k<targets.size();k++){
                    // if(compcol.equals(targets.get(k).getColumnname().toUpperCase())){
                         List list =  FuzzySearch.extractAll(targets.get(k).getColumnname().toUpperCase(),sources, x -> x.getColumnname().toUpperCase());
-                        //list.stream().
+                        String score = splitscore(list,compcol);
                         //FuzzySearch.
                         System.out.println(compcol+"--"+list)  ;
                         output = new Output();
@@ -69,7 +69,7 @@ public class UploadServiceImp implements UploadService{
                         output.setTargetcolumn(targets.get(k).getColumnname());
                         output.setMatchedtable(tablename);
                         output.setMatchedcolumn(compcol);
-                        output.setPercentage(list.toString());
+                        output.setPercentage(score);
                         output.setPriority(""+priorities.get(i).getPriority());
                         outputList.add(output);
 
@@ -85,4 +85,19 @@ public class UploadServiceImp implements UploadService{
 
         return outputList;
     }
+    public String splitscore(List list,String matchedcol){
+        String score = "0";
+       for(int i=0;i<list.size();i++){
+           String temp = list.get(i).toString().replace("(","").replace(")","");
+           String arj[] = temp.replace("string:","").replace("score:","").replace("index:","").trim().split(",");
+           if(arj[0].trim().equals(matchedcol)){
+                  System.out.println(arj[0]+"--"+arj[1]);
+                  score = arj[1];
+              }
+
+       }
+
+        return score;
+    }
 }
+
