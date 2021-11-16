@@ -130,6 +130,7 @@ public class UploadController {
     }
 
     @PostMapping(value ="/downloadFile", consumes = "multipart/form-data")
+    @CrossOrigin(origins = "*")
     public List<Output> runFile (@RequestParam("file") MultipartFile[] files) {
         List<Output> output = new ArrayList<>();
         List<Source> sources = new ArrayList<>();
