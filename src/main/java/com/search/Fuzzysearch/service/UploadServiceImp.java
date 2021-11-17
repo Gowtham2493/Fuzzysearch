@@ -60,7 +60,7 @@ public class UploadServiceImp implements UploadService{
                 String compcol =  sources.get(j).getColumnname().toUpperCase();
                 for(int k=0;k<targets.size();k++){
                    // if(compcol.equals(targets.get(k).getColumnname().toUpperCase())){
-                        List list =  FuzzySearch.extractAll(targets.get(k).getColumnname().toUpperCase(),sources, x -> x.getColumnname().toUpperCase());
+                        List list =  FuzzySearch.extractAll(targets.get(k).getColumnname().toUpperCase(),sources, x -> x.getColumnname().toUpperCase(),50);
                         String score = splitscore(list,compcol);
                         //FuzzySearch.
                         System.out.println(compcol+"--"+list)  ;
