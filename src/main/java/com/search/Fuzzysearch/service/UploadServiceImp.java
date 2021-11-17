@@ -65,13 +65,15 @@ public class UploadServiceImp implements UploadService{
                         //FuzzySearch.
                         System.out.println(compcol+"--"+list)  ;
                         output = new Output();
-                        output.setTargettable(targets.get(k).getTablename());
-                        output.setTargetcolumn(targets.get(k).getColumnname());
-                        output.setMatchedtable(tablename);
-                        output.setMatchedcolumn(compcol);
-                        output.setPercentage(score);
-                        output.setPriority(""+priorities.get(i).getPriority());
-                        outputList.add(output);
+                        if(!score.equals("0")) {
+                            output.setTargettable(targets.get(k).getTablename());
+                            output.setTargetcolumn(targets.get(k).getColumnname());
+                            output.setMatchedtable(tablename);
+                            output.setMatchedcolumn(compcol);
+                            output.setPercentage(score);
+                            output.setPriority("" + priorities.get(i).getPriority());
+                            outputList.add(output);
+                        }
 
                    // }
 
