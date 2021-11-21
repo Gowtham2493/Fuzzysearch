@@ -7,61 +7,61 @@ import java.io.Serializable;
 public class Source implements Serializable {
 
     @CsvBindByName(column = "Table Name")
-    private String tablename;
+    private String tableName;
     @CsvBindByName(column = "Column Name")
-    private String columnname;
+    private String columnName;
     @CsvBindByName(column = "Column Description")
-    private String columndesc;
-    @CsvBindByName(column = "Column Tag")
-    private String columntag;
+    private String columnDesc;
+    @CsvBindByName(column = "Tags")
+    private String columnTag;
 
     public Source (){}
-    public Source(String tablename, String columnname, String columndesc, String columntag) {
-        this.tablename = tablename;
-        this.columnname = columnname;
-        this.columndesc = columndesc;
-        this.columntag = columntag;
+    public Source(String tableName, String columnname, String columndesc, String columntag) {
+        this.tableName = tableName.trim();
+        this.columnName = columnname.trim();
+        this.columnDesc = columndesc.trim();
+        this.columnTag = columntag.trim();
     }
 
-    public String getTablename() {
-        return tablename;
+    public String getTableName() {
+        return tableName;
     }
 
-    public void setTablename(String tablename) {
-        this.tablename = tablename;
+    public void setTableName(String tableName) {
+        this.tableName = tableName.trim();
     }
 
-    public String getColumnname() {
-        return columnname;
+    public String getColumnName() {
+        return columnName;
     }
 
-    public void setColumnname(String columnname) {
-        this.columnname = columnname;
+    public void setColumnName(String columnName) {
+        this.columnName = columnName.trim();
     }
 
-    public String getColumndesc() {
-        return columndesc;
+    public String getColumnDesc() {
+        return columnDesc;
     }
 
-    public void setColumndesc(String columndesc) {
-        this.columndesc = columndesc;
+    public void setColumnDesc(String columnDesc) {
+        this.columnDesc = columnDesc.trim();
     }
 
-    public String getColumntag() {
-        return columntag;
+    public String getColumnTag() {
+        return columnTag;
     }
 
-    public void setColumntag(String columntag) {
-        this.columntag = columntag;
+    public void setColumnTag(String columnTag) {
+        this.columnTag = columnTag.trim();
     }
 
     @Override
     public String toString() {
         return "Source{" +
-                "tablename='" + tablename + '\'' +
-                ", columnname='" + columnname + '\'' +
-                ", columndesc='" + columndesc + '\'' +
-                ", columntag='" + columntag + '\'' +
+                "tableName='" + tableName + '\'' +
+                ", columnName='" + columnName + '\'' +
+                ", columnDesc='" + columnDesc + '\'' +
+                ", columnTag='" + columnTag + '\'' +
                 '}';
     }
 }

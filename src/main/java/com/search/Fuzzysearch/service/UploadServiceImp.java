@@ -1,10 +1,7 @@
 package com.search.Fuzzysearch.service;
 
 import com.opencsv.CSVWriter;
-import com.search.Fuzzysearch.entity.Output;
-import com.search.Fuzzysearch.entity.Priority;
-import com.search.Fuzzysearch.entity.Source;
-import com.search.Fuzzysearch.entity.Target;
+import com.search.Fuzzysearch.entity.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.io.File;
@@ -55,51 +52,113 @@ public class UploadServiceImp implements UploadService{
            String tablename= priorities.get(i).getTablename();
             System.out.println(priorities.toString());
            for(int j=0;j<sources.size();j++){
-               String comptable = sources.get(j).getTablename().toUpperCase();
+               String comptable = sources.get(j).getTableName().toUpperCase();
             if(tablename.toUpperCase().equals(comptable)){
-                String compcol =  sources.get(j).getColumnname().toUpperCase();
+                String compcol =  sources.get(j).getColumnName().toUpperCase();
+                String compdesc = sources.get(j).getColumnDesc();
                 for(int k=0;k<targets.size();k++){
                    // if(compcol.equals(targets.get(k).getColumnname().toUpperCase())){
-                        List list =  FuzzySearch.extractAll(targets.get(k).getColumnname().toUpperCase(),sources, x -> x.getColumnname().toUpperCase(),50);
-                        String score = splitscore(list,compcol);
-                        //FuzzySearch.
-                        System.out.println(compcol+"--"+list)  ;
+                        List list =  FuzzySearch.extractAll(targets.get(k).getColumnName().toUpperCase(),sources, x -> x.getColumnName().toUpperCase());
+                    //To do get column desc and column tag and do fuzzysearch and compare among these three lists and show greater score
+                    String scoreCol = splitscore(list,compcol).trim();
+                    if(Integer.parseInt(scoreCol) < 80 && Integer.parseInt(scoreCol) > 0){
+                        String compDesc =  sources.get(j).getColumnDesc().toUpperCase();
+                        List list1 =  FuzzySearch.extractAll(targets.get(k).getColumnDesc().toUpperCase(),sources, x -> x.getColumnDesc().toUpperCase());
                         output = new Output();
-                        if(!score.equals("0")) {
-                            output.setTargettable(targets.get(k).getTablename());
-                            output.setTargetcolumn(targets.get(k).getColumnname());
-                            output.setMatchedtable(tablename);
-                            output.setMatchedcolumn(compcol);
-                            output.setPercentage(score);
+                        String scoreDesc = splitscore(list1,compDesc).trim();
+                        if(Integer.parseInt(scoreDesc) < 80 && Integer.parseInt(scoreDesc) > 0) {
+                            String compTag =  sources.get(j).getColumnTag().toUpperCase();
+                            List list2 =  FuzzySearch.extractAll(targets.get(k).getColumnTag().toUpperCase(),sources, x -> x.getColumnTag().toUpperCase());
+
+                            String scoreTag = splitscore(list2,compTag).trim();
+                            if(Integer.parseInt(scoreTag) > 0) {
+                                output = new Output();
+                                output.setTargetTable(targets.get(k).getTableName());
+                                output.setTargetColumn(targets.get(k).getColumnName());
+                                output.setTargetDesc(targets.get(k).getColumnDesc());
+                                output.setSrcTable(tablename);
+                                output.setSrcColumn(compcol);
+                                output.setSrcDesc(compdesc);
+                                output.setPercentage(scoreTag);
+                                output.setPriority("" + priorities.get(i).getPriority());
+                                outputList.add(output);
+                            }
+                        }
+                        else if(!scoreDesc.equals("0")){
+                            output = new Output();
+                            output.setTargetTable(targets.get(k).getTableName());
+                            output.setTargetColumn(targets.get(k).getColumnName());
+                            output.setTargetDesc(targets.get(k).getColumnDesc());
+                            output.setSrcTable(tablename);
+                            output.setSrcColumn(compcol);
+                            output.setSrcDesc(compdesc);
+                            output.setPercentage(scoreDesc);
                             output.setPriority("" + priorities.get(i).getPriority());
                             outputList.add(output);
                         }
+                    }
+                    else {
+                        output = new Output();
+                        if(!scoreCol.equals("0")) {
+                            output.setTargetTable(targets.get(k).getTableName());
+                            output.setTargetColumn(targets.get(k).getColumnName());
+                            output.setTargetDesc(targets.get(k).getColumnDesc());
+                            output.setSrcTable(tablename);
+                            output.setSrcColumn(compcol);
+                            output.setSrcDesc(compdesc);
+                            output.setPercentage(scoreCol);
+                            output.setPriority("" + priorities.get(i).getPriority());
+                            outputList.add(output);
+                        }
+                    }
+
 
                    // }
 
                 }
 
+
             }
            }
 
         }
+        // add one more file reinforcement file
+        // To do how to check out of three priority table which one has the highest percentage
+
+        // To do sort output table with desc
+      // Collections.sort(outputList, Comparator.comparingInt(p -> Integer.parseInt(p.getPercentage())));
+        //Collections.sort(outputList, Collections.reverseOrder());
 
 
         return outputList;
     }
+
     public String splitscore(List list,String matchedcol){
         String score = "0";
        for(int i=0;i<list.size();i++){
            String temp = list.get(i).toString().replace("(","").replace(")","");
            String arj[] = temp.replace("string:","").replace("score:","").replace("index:","").trim().split(",");
            if(arj[0].trim().equals(matchedcol)){
-                  System.out.println(arj[0]+"--"+arj[1]);
                   score = arj[1];
               }
 
        }
 
         return score;
+    }
+
+    @Override
+    public List<Source> combineReinfSrc(List<Source> sources, List<Reinforcement> reinforcements) {
+        System.out.println("sources = " + sources +"\n"+"reinforcements = " + reinforcements);
+       for(int i=0;i<reinforcements.size();i++){
+            for(int j=0;j<sources.size();j++){
+                if(reinforcements.get(i).getSrcTableName().equals(sources.get(j).getTableName() )
+                        && reinforcements.get(i).getSrcColName().equals(sources.get(j).getColumnName())){
+                    sources.get(j).setColumnTag(sources.get(j).getColumnTag() + ", " + reinforcements.get(i).getColumnDesc());
+                }
+            }
+        }
+        return sources;
     }
 }
 

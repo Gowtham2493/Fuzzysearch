@@ -1,76 +1,109 @@
 package com.search.Fuzzysearch.entity;
 
-import com.opencsv.bean.CsvBindByName;
 
-public class Output {
-    @CsvBindByName(column = "Target Table")
-    private String targettable;
-    @CsvBindByName(column = "Target Column")
-    private String targetcolumn;
-    @CsvBindByName(column = "Matched Table")
-    private String matchedtable;
-    @CsvBindByName(column = "Matched Column")
-    private String matchedcolumn;
-    @CsvBindByName(column = "Percentage")
-    private String percentage;
-    @CsvBindByName(column = "Priority")
-    private String priority;
+public class Output implements Comparable<Output>{
+    private String TargetTable;
+    private String TargetColumn;
+    private String TargetDesc;
+    private String SrcTable;
+    private String SrcColumn;
+    private String SrcDesc;
+    private String Percentage;
+    private String Priority;
 
     public  Output(){}
-    public Output(String targettable, String targetcolumn, String matchedtable, String matchedcolumn, String percentage, String priority) {
-        this.targettable = targettable;
-        this.targetcolumn = targetcolumn;
-        this.matchedtable = matchedtable;
-        this.matchedcolumn = matchedcolumn;
-        this.percentage = percentage;
-        this.priority = priority;
+
+    public Output(String targetTable, String targetColumn, String targetDesc, String srcTable, String srcColumn, String srcDesc, String percentage, String priority) {
+        TargetTable = targetTable;
+        TargetColumn = targetColumn;
+        TargetDesc = targetDesc;
+        SrcTable = srcTable;
+        SrcColumn = srcColumn;
+        SrcDesc = srcDesc;
+        Percentage = percentage;
+        Priority = priority;
     }
 
-    public String getTargettable() {
-        return targettable;
+    public String getTargetTable() {
+        return TargetTable;
     }
 
-    public void setTargettable(String targettable) {
-        this.targettable = targettable;
+    public void setTargetTable(String targetTable) {
+        TargetTable = targetTable;
     }
 
-    public String getTargetcolumn() {
-        return targetcolumn;
+    public String getTargetColumn() {
+        return TargetColumn;
     }
 
-    public void setTargetcolumn(String targetcolumn) {
-        this.targetcolumn = targetcolumn;
+    public void setTargetColumn(String targetColumn) {
+        TargetColumn = targetColumn;
     }
 
-    public String getMatchedtable() {
-        return matchedtable;
+    public String getTargetDesc() {
+        return TargetDesc;
     }
 
-    public void setMatchedtable(String matchedtable) {
-        this.matchedtable = matchedtable;
+    public void setTargetDesc(String targetDesc) {
+        TargetDesc = targetDesc;
     }
 
-    public String getMatchedcolumn() {
-        return matchedcolumn;
+    public String getSrcTable() {
+        return SrcTable;
     }
 
-    public void setMatchedcolumn(String matchedcolumn) {
-        this.matchedcolumn = matchedcolumn;
+    public void setSrcTable(String srcTable) {
+        SrcTable = srcTable;
+    }
+
+    public String getSrcColumn() {
+        return SrcColumn;
+    }
+
+    public void setSrcColumn(String srcColumn) {
+        SrcColumn = srcColumn;
+    }
+
+    public String getSrcDesc() {
+        return SrcDesc;
+    }
+
+    public void setSrcDesc(String srcDesc) {
+        SrcDesc = srcDesc;
     }
 
     public String getPercentage() {
-        return percentage;
+        return Percentage;
     }
 
     public void setPercentage(String percentage) {
-        this.percentage = percentage;
+        Percentage = percentage;
     }
 
     public String getPriority() {
-        return priority;
+        return Priority;
     }
 
     public void setPriority(String priority) {
-        this.priority = priority;
+        Priority = priority;
+    }
+
+    @Override
+    public String toString() {
+        return "Output{" +
+                "TargetTable='" + TargetTable + '\'' +
+                ", TargetColumn='" + TargetColumn + '\'' +
+                ", TargetDesc='" + TargetDesc + '\'' +
+                ", SrcTable='" + SrcTable + '\'' +
+                ", SrcColumn='" + SrcColumn + '\'' +
+                ", SrcDesc='" + SrcDesc + '\'' +
+                ", Percentage='" + Percentage + '\'' +
+                ", Priority='" + Priority + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Output o) {
+        return this.getPercentage().compareTo(o.Percentage);
     }
 }

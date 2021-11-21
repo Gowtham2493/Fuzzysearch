@@ -2,10 +2,7 @@ package com.search.Fuzzysearch.controller;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.search.Fuzzysearch.entity.Output;
-import com.search.Fuzzysearch.entity.Priority;
-import com.search.Fuzzysearch.entity.Source;
-import com.search.Fuzzysearch.entity.Target;
+import com.search.Fuzzysearch.entity.*;
 import com.search.Fuzzysearch.service.UploadService;
 import com.search.Fuzzysearch.service.UploadServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +133,7 @@ public class UploadController {
         List<Source> sources = new ArrayList<>();
         List<Target> targets = new ArrayList<>();
         List<Priority> priorities = new ArrayList<>();
+        List<Reinforcement> reinforcements = new ArrayList<>();
         for (MultipartFile file:
                 files ) {
 
@@ -178,6 +176,17 @@ public class UploadController {
                         priorities= csvToBean.parse();
                     }
 
+                else  if(file.getOriginalFilename().contains("reinforce")) {
+                    // create csv bean reader
+                    CsvToBean<Reinforcement> csvToBean = new CsvToBeanBuilder(reader)
+                            .withType(Reinforcement.class)
+                            .withIgnoreLeadingWhiteSpace(true)
+                            .build();
+
+                    // convert `CsvToBean` object to list of users
+                    reinforcements= csvToBean.parse();
+                }
+
 
                 } catch (Exception ex) {
 
@@ -185,6 +194,10 @@ public class UploadController {
 
             }
         }
+        if(reinforcements.size() > 0){
+            sources = service.combineReinfSrc(sources,reinforcements);
+        }
+
       output=  service.runLogic(sources,targets,priorities);
 
     return output;
