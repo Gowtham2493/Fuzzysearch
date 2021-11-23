@@ -61,7 +61,7 @@ public class UploadServiceImp implements UploadService{
                         List list =  FuzzySearch.extractAll(targets.get(k).getColumnName().toUpperCase(),sources, x -> x.getColumnName().toUpperCase());
                     //To do get column desc and column tag and do fuzzysearch and compare among these three lists and show greater score
                     String scoreCol = splitscore(list,compcol).trim();
-                    if(Integer.parseInt(scoreCol) < 80 && Integer.parseInt(scoreCol) > 0){
+                    if(Integer.parseInt(scoreCol) < 90 && Integer.parseInt(scoreCol) > 0){
                         String compDesc =  sources.get(j).getColumnDesc().toUpperCase();
                         List list1 =  FuzzySearch.extractAll(targets.get(k).getColumnDesc().toUpperCase(),sources, x -> x.getColumnDesc().toUpperCase());
                         output = new Output();
@@ -73,12 +73,12 @@ public class UploadServiceImp implements UploadService{
                             String scoreTag = splitscore(list2,compTag).trim();
                             if(Integer.parseInt(scoreTag) > 0) {
                                 output = new Output();
-                                output.setTargetTable(targets.get(k).getTableName());
-                                output.setTargetColumn(targets.get(k).getColumnName());
-                                output.setTargetDesc(targets.get(k).getColumnDesc());
-                                output.setSrcTable(tablename);
-                                output.setSrcColumn(compcol);
-                                output.setSrcDesc(compdesc);
+                                output.settTbName(targets.get(k).getTableName());
+                                output.settColName(targets.get(k).getColumnName());
+                                output.settDesc(targets.get(k).getColumnDesc());
+                                output.setsTbName(tablename);
+                                output.setsColName(compcol);
+                                output.setsDesc(compdesc);
                                 output.setPercentage(scoreTag);
                                 output.setPriority("" + priorities.get(i).getPriority());
                                 outputList.add(output);
@@ -86,12 +86,12 @@ public class UploadServiceImp implements UploadService{
                         }
                         else if(!scoreDesc.equals("0")){
                             output = new Output();
-                            output.setTargetTable(targets.get(k).getTableName());
-                            output.setTargetColumn(targets.get(k).getColumnName());
-                            output.setTargetDesc(targets.get(k).getColumnDesc());
-                            output.setSrcTable(tablename);
-                            output.setSrcColumn(compcol);
-                            output.setSrcDesc(compdesc);
+                            output.settTbName(targets.get(k).getTableName());
+                            output.settColName(targets.get(k).getColumnName());
+                            output.settDesc(targets.get(k).getColumnDesc());
+                            output.setsTbName(tablename);
+                            output.setsColName(compcol);
+                            output.setsDesc(compdesc);
                             output.setPercentage(scoreDesc);
                             output.setPriority("" + priorities.get(i).getPriority());
                             outputList.add(output);
@@ -100,12 +100,12 @@ public class UploadServiceImp implements UploadService{
                     else {
                         output = new Output();
                         if(!scoreCol.equals("0")) {
-                            output.setTargetTable(targets.get(k).getTableName());
-                            output.setTargetColumn(targets.get(k).getColumnName());
-                            output.setTargetDesc(targets.get(k).getColumnDesc());
-                            output.setSrcTable(tablename);
-                            output.setSrcColumn(compcol);
-                            output.setSrcDesc(compdesc);
+                            output.settTbName(targets.get(k).getTableName());
+                            output.settColName(targets.get(k).getColumnName());
+                            output.settDesc(targets.get(k).getColumnDesc());
+                            output.setsTbName(tablename);
+                            output.setsColName(compcol);
+                            output.setsDesc(compdesc);
                             output.setPercentage(scoreCol);
                             output.setPriority("" + priorities.get(i).getPriority());
                             outputList.add(output);

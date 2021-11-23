@@ -8,9 +8,9 @@ public class Source implements Serializable {
 
     @CsvBindByName(column = "Table Name")
     private String tableName;
-    @CsvBindByName(column = "Column Name")
+    @CsvBindByName(column = "Col Name")
     private String columnName;
-    @CsvBindByName(column = "Column Description")
+    @CsvBindByName(column = "Col Description")
     private String columnDesc;
     @CsvBindByName(column = "Tags")
     private String columnTag;

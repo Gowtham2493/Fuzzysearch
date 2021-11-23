@@ -2,108 +2,130 @@ package com.search.Fuzzysearch.entity;
 
 
 public class Output implements Comparable<Output>{
-    private String TargetTable;
-    private String TargetColumn;
-    private String TargetDesc;
-    private String SrcTable;
-    private String SrcColumn;
-    private String SrcDesc;
-    private String Percentage;
-    private String Priority;
+    private String tTbName;
+    private String tColName;
+    private String tDesc;
+    private String sTbName;
+    private String sColName;
+    private String sDesc;
+    private String percentage;
+    private String priority;
+    private String retable;
+    private String recolumn;
 
     public  Output(){}
 
-    public Output(String targetTable, String targetColumn, String targetDesc, String srcTable, String srcColumn, String srcDesc, String percentage, String priority) {
-        TargetTable = targetTable;
-        TargetColumn = targetColumn;
-        TargetDesc = targetDesc;
-        SrcTable = srcTable;
-        SrcColumn = srcColumn;
-        SrcDesc = srcDesc;
-        Percentage = percentage;
-        Priority = priority;
+    public Output(String tTbName, String tColName, String tDesc, String sTbName, String sColName, String sDesc, String percentage, String priority, String retable, String recol) {
+        this.tTbName = tTbName;
+        this.tColName = tColName;
+        this.tDesc = tDesc;
+        this.sTbName = sTbName;
+        this.sColName = sColName;
+        this.sDesc = sDesc;
+        this.percentage = percentage;
+        this.priority = priority;
+        this.retable = retable;
+        this.recolumn = recol;
     }
 
-    public String getTargetTable() {
-        return TargetTable;
+    public String gettTbName() {
+        return tTbName;
     }
 
-    public void setTargetTable(String targetTable) {
-        TargetTable = targetTable;
+    public void settTbName(String tTbName) {
+        this.tTbName = tTbName;
     }
 
-    public String getTargetColumn() {
-        return TargetColumn;
+    public String gettColName() {
+        return tColName;
     }
 
-    public void setTargetColumn(String targetColumn) {
-        TargetColumn = targetColumn;
+    public void settColName(String tColName) {
+        this.tColName = tColName;
     }
 
-    public String getTargetDesc() {
-        return TargetDesc;
+    public String gettDesc() {
+        return tDesc;
     }
 
-    public void setTargetDesc(String targetDesc) {
-        TargetDesc = targetDesc;
+    public void settDesc(String tDesc) {
+        this.tDesc = tDesc;
     }
 
-    public String getSrcTable() {
-        return SrcTable;
+    public String getsTbName() {
+        return sTbName;
     }
 
-    public void setSrcTable(String srcTable) {
-        SrcTable = srcTable;
+    public void setsTbName(String sTbName) {
+        this.sTbName = sTbName;
     }
 
-    public String getSrcColumn() {
-        return SrcColumn;
+    public String getsColName() {
+        return sColName;
     }
 
-    public void setSrcColumn(String srcColumn) {
-        SrcColumn = srcColumn;
+    public void setsColName(String sColName) {
+        this.sColName = sColName;
     }
 
-    public String getSrcDesc() {
-        return SrcDesc;
+    public String getsDesc() {
+        return sDesc;
     }
 
-    public void setSrcDesc(String srcDesc) {
-        SrcDesc = srcDesc;
+    public void setsDesc(String sDesc) {
+        this.sDesc = sDesc;
     }
 
     public String getPercentage() {
-        return Percentage;
+        return percentage;
     }
 
     public void setPercentage(String percentage) {
-        Percentage = percentage;
+        this.percentage = percentage;
     }
 
     public String getPriority() {
-        return Priority;
+        return priority;
     }
 
     public void setPriority(String priority) {
-        Priority = priority;
+        this.priority = priority;
+    }
+
+    public String getRetable() {
+        return retable;
+    }
+
+    public void setRetable(String retable) {
+        this.retable = retable;
+    }
+
+    public String getRecolumn() {
+        return recolumn;
+    }
+
+    public void setRecolumn(String recolumn) {
+        this.recolumn = recolumn;
+    }
+
+    @Override
+    public int compareTo(Output o) {
+        return this.getPercentage().compareTo(o.percentage);
     }
 
     @Override
     public String toString() {
         return "Output{" +
-                "TargetTable='" + TargetTable + '\'' +
-                ", TargetColumn='" + TargetColumn + '\'' +
-                ", TargetDesc='" + TargetDesc + '\'' +
-                ", SrcTable='" + SrcTable + '\'' +
-                ", SrcColumn='" + SrcColumn + '\'' +
-                ", SrcDesc='" + SrcDesc + '\'' +
-                ", Percentage='" + Percentage + '\'' +
-                ", Priority='" + Priority + '\'' +
+                "tTbName='" + tTbName + '\'' +
+                ", tColName='" + tColName + '\'' +
+                ", tDesc='" + tDesc + '\'' +
+                ", sTbName='" + sTbName + '\'' +
+                ", sColName='" + sColName + '\'' +
+                ", sDesc='" + sDesc + '\'' +
+                ", percentage='" + percentage + '\'' +
+                ", priority='" + priority + '\'' +
+                ", retable='" + retable + '\'' +
+                ", recolumn='" + recolumn + '\'' +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Output o) {
-        return this.getPercentage().compareTo(o.Percentage);
     }
 }
