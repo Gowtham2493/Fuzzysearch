@@ -120,8 +120,8 @@ public class UploadServiceImp implements UploadService{
                         }
                         else {
                         	unmatched = new Unmatched();
-                        	unmatched.setTbname(targets.get(k).getTableName());
-                        	unmatched.setColname(targets.get(k).getColumnName());
+                        	unmatched.setTbName(targets.get(k).getTableName());
+                        	unmatched.setColName(targets.get(k).getColumnName());
                         	unmatched.setDesc(targets.get(k).getColumnDesc());
                         	unmatched.setTags(targets.get(k).getColumnTag());
                         	unmatcheds.add(unmatched);

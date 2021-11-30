@@ -1,55 +1,61 @@
 package com.search.Fuzzysearch.entity;
 
 public class Unmatched {
-	private String Tbname ;
-	private String Colname;
-	private String Desc;
-	private String Tags;
+	private String tbName ;
+	private String colName;
+	private String desc;
+	private String tags;
 	
 	public Unmatched() {
 		
 	}
-	
-	public Unmatched(String tbname, String colname, String desc, String tags) {
-		this.Tbname = tbname;
-		this.Colname = colname;
-		this.Desc = desc;
-		this.Tags = tags;
+
+	public Unmatched(String tbName, String colName, String desc, String tags) {
+		this.tbName = tbName;
+		this.colName = colName;
+		this.desc = desc;
+		this.tags = tags;
 	}
 
+	public String getTbName() {
+		return tbName;
+	}
 
+	public void setTbName(String tbName) {
+		this.tbName = tbName;
+	}
 
-	public String getTbname() {
-		return Tbname;
+	public String getColName() {
+		return colName;
 	}
-	public void setTbname(String tbname) {
-		this.Tbname = tbname;
+
+	public void setColName(String colName) {
+		this.colName = colName;
 	}
-	public String getColname() {
-		return Colname;
-	}
-	public void setColname(String colname) {
-		this.Colname = colname;
-	}
+
 	public String getDesc() {
-		return Desc;
+		return desc;
 	}
+
 	public void setDesc(String desc) {
-		this.Desc = desc;
+		this.desc = desc;
 	}
+
 	public String getTags() {
-		return Tags;
+		return tags;
 	}
+
 	public void setTags(String tags) {
-		this.Tags = tags;
+		this.tags = tags;
 	}
 
 	@Override
 	public String toString() {
-		return "Unmatched [Tbname=" + Tbname + ", Colname=" + Colname + ", Desc=" + Desc + ", Tags=" + Tags + "]";
+		return "Unmatched{" +
+				"tbName='" + tbName + '\'' +
+				", colName='" + colName + '\'' +
+				", desc='" + desc + '\'' +
+				", tags='" + tags + '\'' +
+				'}';
 	}
-	
-	
-	
-
 }
