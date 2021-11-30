@@ -21,7 +21,7 @@ import java.util.*;
 import org.json.JSONObject;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class UploadController {
 
     UploadService service = new UploadServiceImp();
@@ -130,7 +130,7 @@ public class UploadController {
         return "file-upload-status";
     }
 
-    @PostMapping(value ="/downloadFile", consumes = "multipart/form-data",produces= MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/mapper", consumes = "multipart/form-data",produces= MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "*")
     public Map<String, Object> runFile (@RequestParam("file") MultipartFile[] files,@RequestParam("threshold") String threshold) throws JSONException {
         Map<String, Object> jsonObject = new HashMap();
