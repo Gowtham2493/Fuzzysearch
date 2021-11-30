@@ -3,6 +3,7 @@ package com.search.Fuzzysearch.service;
 import com.opencsv.CSVWriter;
 import com.search.Fuzzysearch.entity.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
+import sun.nio.cs.ext.MacArabic;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -42,11 +43,19 @@ public class UploadServiceImp implements UploadService{
     }
 
     @Override
-    public List<Output> runLogic(List<Source> sources, List<Target> targets, List<Priority> priorities) {
+    //public List<Output> runLogic(List<Source> sources, List<Target> targets, List<Priority> priorities,String thresholds) {
+    public Map<String,Object> runLogic(List<Source> sources, List<Target> targets, List<Priority> priorities,String thresholds){
+        Map<String,Object> map=new HashMap<>();
         Collection<Source> sourceCollection = sources;
         Collections.sort(priorities, Comparator.comparingInt(p -> p.getPriority()));
         List<Output> outputList = new ArrayList<Output>();
+        List<Unmatched> unmatcheds = new ArrayList<Unmatched>();
         Output output = new Output();
+        Unmatched unmatched = new Unmatched();
+        int threshold=90;
+        if(thresholds!=null && thresholds!="") {
+        	threshold = Integer.parseInt(thresholds);
+        }
         System.out.println(sourceCollection.toString());
         for(int i=0;i<priorities.size();i++){
            String tablename= priorities.get(i).getTablename();
@@ -61,12 +70,12 @@ public class UploadServiceImp implements UploadService{
                         List list =  FuzzySearch.extractAll(targets.get(k).getColumnName().toUpperCase(),sources, x -> x.getColumnName().toUpperCase());
                     //To do get column desc and column tag and do fuzzysearch and compare among these three lists and show greater score
                     String scoreCol = splitscore(list,compcol).trim();
-                    if(Integer.parseInt(scoreCol) < 90 && Integer.parseInt(scoreCol) > 0){
+                    if(Integer.parseInt(scoreCol) < threshold && Integer.parseInt(scoreCol) > 0){
                         String compDesc =  sources.get(j).getColumnDesc().toUpperCase();
                         List list1 =  FuzzySearch.extractAll(targets.get(k).getColumnDesc().toUpperCase(),sources, x -> x.getColumnDesc().toUpperCase());
                         output = new Output();
                         String scoreDesc = splitscore(list1,compDesc).trim();
-                        if(Integer.parseInt(scoreDesc) < 80 && Integer.parseInt(scoreDesc) > 0) {
+                        if(Integer.parseInt(scoreDesc) < threshold && Integer.parseInt(scoreDesc) > 0) {
                             String compTag =  sources.get(j).getColumnTag().toUpperCase();
                             List list2 =  FuzzySearch.extractAll(targets.get(k).getColumnTag().toUpperCase(),sources, x -> x.getColumnTag().toUpperCase());
 
@@ -98,8 +107,9 @@ public class UploadServiceImp implements UploadService{
                         }
                     }
                     else {
-                        output = new Output();
+
                         if(!scoreCol.equals("0")) {
+                            output = new Output();
                             output.settTbName(targets.get(k).getTableName());
                             output.settColName(targets.get(k).getColumnName());
                             output.settDesc(targets.get(k).getColumnDesc());
@@ -110,6 +120,18 @@ public class UploadServiceImp implements UploadService{
                             output.setPriority("" + priorities.get(i).getPriority());
                             outputList.add(output);
                         }
+                        else {
+                        	unmatched = new Unmatched();
+                        	unmatched.setTbname(targets.get(k).getTableName());
+                        	unmatched.setColname(targets.get(k).getColumnName());
+                        	unmatched.setDesc(targets.get(k).getColumnDesc());
+                        	unmatched.setTags(targets.get(k).getColumnTag());
+                        	unmatcheds.add(unmatched);
+                        	//output.setUnmatched(unmatcheds);
+                        	//outputList.add(output);
+
+                        }
+                        
                     }
 
 
@@ -129,8 +151,9 @@ public class UploadServiceImp implements UploadService{
       // Collections.sort(outputList, Comparator.comparingInt(p -> Integer.parseInt(p.getPercentage())));
         //Collections.sort(outputList, Collections.reverseOrder());
 
-
-        return outputList;
+        map.put("data",outputList);
+        map.put("unMatchedTargets",unmatcheds);
+        return map;
     }
 
     public String splitscore(List list,String matchedcol){

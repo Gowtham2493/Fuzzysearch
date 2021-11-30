@@ -132,7 +132,7 @@ public class UploadController {
 
     @PostMapping(value ="/downloadFile", consumes = "multipart/form-data",produces= MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "*")
-    public Map<String, Object> runFile (@RequestParam("file") MultipartFile[] files) throws JSONException {
+    public Map<String, Object> runFile (@RequestParam("file") MultipartFile[] files,@RequestParam("threshold") String threshold) throws JSONException {
         Map<String, Object> jsonObject = new HashMap();
         List<Output> output = new ArrayList<>();
         List<Source> sources = new ArrayList<>();
@@ -204,11 +204,11 @@ public class UploadController {
             sources = service.combineReinfSrc(sources,reinforcements);
         }
 
-      output=  service.runLogic(sources,targets,priorities);
+     // output=  service.runLogic(sources,targets,priorities,threshold);
+        Map<String,Object> objectMap=service.runLogic(sources,targets,priorities,threshold);
+       // jsonObject.put("data",output);
 
-        jsonObject.put("data",output);
-
-    return jsonObject;
+    return objectMap;
 
     }
 

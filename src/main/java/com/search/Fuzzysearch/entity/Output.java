@@ -1,5 +1,6 @@
 package com.search.Fuzzysearch.entity;
 
+import java.util.List;
 
 public class Output implements Comparable<Output>{
     private String tTbName;
@@ -12,6 +13,7 @@ public class Output implements Comparable<Output>{
     private String priority;
     private String retable;
     private String recolumn;
+   // private List<Unmatched> unmatched;
 
     public  Output(){}
 
@@ -26,6 +28,7 @@ public class Output implements Comparable<Output>{
         this.priority = priority;
         this.retable = retable;
         this.recolumn = recol;
+        //this.unmatched = unmatched;
     }
 
     public String gettTbName() {
@@ -107,8 +110,18 @@ public class Output implements Comparable<Output>{
     public void setRecolumn(String recolumn) {
         this.recolumn = recolumn;
     }
+    
+    
 
-    @Override
+//    public List<Unmatched> getUnmatched() {
+//		return unmatched;
+//	}
+//
+//	public void setUnmatched(List<Unmatched> unmatched) {
+//		this.unmatched = unmatched;
+//	}
+
+	@Override
     public int compareTo(Output o) {
         return this.getPercentage().compareTo(o.percentage);
     }
