@@ -3,8 +3,6 @@ package com.search.Fuzzysearch.service;
 import com.opencsv.CSVWriter;
 import com.search.Fuzzysearch.entity.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-import sun.nio.cs.ext.MacArabic;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
