@@ -20,12 +20,14 @@ import java.util.*;
 
 import org.json.JSONObject;
 
-@RestController
-@RequestMapping("/api/v1")
+@RestController  //RestController takes care of mapping request data to the defined request handler method
+@RequestMapping("/api/v1")   //maps HTTP requests to handler methods of MVC and REST controllers
 public class UploadController {
 
     UploadService service = new UploadServiceImp();
-    @PostMapping("/upload-source-file")
+    @PostMapping("/upload-source-file")   // advance of @request mapping
+    //@RequestParam used to read the form data and bind it automatically to the parameter present in the provided method.
+      //So, it ignores the requirement of HttpServletRequest object to read the provided data.
     public String uploadSourceFile(@RequestParam("file") MultipartFile file, Model model) {
 
         // validate file
@@ -131,6 +133,7 @@ public class UploadController {
     }
 
     @PostMapping(value ="/mapper", consumes = "multipart/form-data",produces= MediaType.APPLICATION_JSON_VALUE)
+    //@CrossOrigin security concept that allows restricting the resources implemented in web browsers.
     @CrossOrigin(origins = "*")
     public Map<String, Object> runFile (@RequestParam("file") MultipartFile[] files,@RequestParam("threshold") String threshold) throws JSONException {
         Map<String, Object> jsonObject = new HashMap();

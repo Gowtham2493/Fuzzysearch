@@ -5,7 +5,7 @@ import com.opencsv.bean.CsvBindByName;
 import java.io.Serializable;
 
 public class Priority implements Serializable {
-    @CsvBindByName(column = "Table Name")
+    @CsvBindByName(column = "Table Name") //write csv
     private String tablename;
     @CsvBindByName(column = "Priority")
     private int priority;
@@ -32,7 +32,7 @@ public class Priority implements Serializable {
         this.priority = priority;
     }
 
-    @Override
+    @Override  // informs the compiler that the element is meant to override an element declared in a superclass
     public String toString() {
         return "Priority{" +
                 "tablename='" + tablename + '\'' +

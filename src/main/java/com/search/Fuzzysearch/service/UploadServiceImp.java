@@ -51,7 +51,7 @@ public class UploadServiceImp implements UploadService{
         Output output = new Output();
         Unmatched unmatched = new Unmatched();
         int threshold=90;
-        if(thresholds!=null && thresholds!="") {
+        if(thresholds!=null && !thresholds.isEmpty()) {
         	threshold = Integer.parseInt(thresholds);
         }
         System.out.println(sourceCollection.toString());
